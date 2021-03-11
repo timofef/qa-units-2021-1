@@ -1,0 +1,1 @@
+export const sortFunctionMock = jest.fn();
