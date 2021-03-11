@@ -1,5 +1,5 @@
 import React from 'react'
-import {sortByItemCount, sortByDate} from './sortOrders';
+import {sortByItemCount, sortByDate, getSortFunction, sortTypes} from './sortOrders';
 
 describe('sortByItemCount function', () => {
 	it('orders are null', () => {
@@ -117,4 +117,26 @@ describe('sortByDate function', () => {
 	});
 });
 
+describe('getSortFunction function', () => {
+	it('no type', () => {
+		const result = getSortFunction(null);
+		expect(result).toBeUndefined();
+	});
 
+	it('by date', () => {
+		const result = getSortFunction(sortTypes.DATE);
+		expect(result).toEqual(sortByDate);
+	});
+
+	it('by items count', () => {
+		const result = getSortFunction(sortTypes.COUNT);
+		expect(result).toEqual(sortByItemCount);
+	});
+});
+
+describe('sortOrders function', () => {
+	it('by items count', () => {
+		const result = getSortFunction(sortTypes.COUNT);
+		expect(result).toEqual(sortByItemCount);
+	});
+});
