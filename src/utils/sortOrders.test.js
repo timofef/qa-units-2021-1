@@ -4,16 +4,6 @@ import {fakeOrders} from "../data/fakeOrders";
 import {sortFunctionMock} from "./__mocks__/sortFunction";
 
 describe('sortByItemCount function', () => {
-	it('orders are null', () => {
-		const result = sortByItemCount(null, null);
-		expect(result).toEqual(0);
-	});
-
-	it('orders are not objects', () => {
-		const result = sortByItemCount(4, 5);
-		expect(result).toEqual(0);
-	});
-
 	it('same items count', () => {
 		const order1 = {
 			items: ['item1', 'item2'],
@@ -53,32 +43,19 @@ describe('sortByItemCount function', () => {
 		const result = sortByItemCount(order1, order2);
 		expect(result).toEqual(-1);
 	});
-});
 
-describe('sortByDate function', () => {
 	it('orders are null', () => {
-		const result = sortByDate(null, null);
+		const result = sortByItemCount(null, null);
 		expect(result).toEqual(0);
 	});
 
 	it('orders are not objects', () => {
-		const result = sortByDate(4, 5);
+		const result = sortByItemCount(4, 5);
 		expect(result).toEqual(0);
 	});
+});
 
-	it('dates are null', () => {
-		const order1 = {
-			date: null
-		}
-
-		const order2 = {
-			date: null
-		}
-
-		const result = sortByDate(order1, order2);
-		expect(result).toEqual(0);
-	});
-
+describe('sortByDate function', () => {
 	it('dates are equal', () => {
 		const order1 = {
 			date: 1
@@ -117,14 +94,32 @@ describe('sortByDate function', () => {
 		const result = sortByDate(order1, order2);
 		expect(result).toEqual(1);
 	});
+
+	it('orders are null', () => {
+		const result = sortByDate(null, null);
+		expect(result).toEqual(0);
+	});
+
+	it('orders are not objects', () => {
+		const result = sortByDate(4, 5);
+		expect(result).toEqual(0);
+	});
+
+	it('dates are null', () => {
+		const order1 = {
+			date: null
+		}
+
+		const order2 = {
+			date: null
+		}
+
+		const result = sortByDate(order1, order2);
+		expect(result).toEqual(0);
+	});
 });
 
 describe('getSortFunction function', () => {
-	it('no type', () => {
-		const result = getSortFunction(null);
-		expect(result).toBeUndefined();
-	});
-
 	it('by date', () => {
 		const result = getSortFunction(sortTypes.DATE);
 		expect(result).toEqual(sortByDate);
@@ -134,11 +129,21 @@ describe('getSortFunction function', () => {
 		const result = getSortFunction(sortTypes.COUNT);
 		expect(result).toEqual(sortByItemCount);
 	});
+
+	it('no type', () => {
+		const result = getSortFunction(null);
+		expect(result).toBeUndefined();
+	});
 });
 
 describe('sortOrders function', () => {
 	afterEach(() => {
 		jest.resetAllMocks();
+	});
+
+	it('sortFunction is called', () => {
+		const result = sortOrders(fakeOrders, sortFunctionMock);
+		expect(sortFunctionMock).toBeCalled();
 	});
 
 	it('null arguments', () => {
@@ -165,10 +170,5 @@ describe('sortOrders function', () => {
 	it('sortFunction is not a function', () => {
 		const result = sortOrders(fakeOrders, 1);
 		expect(result).toBeUndefined();
-	});
-
-	it('sortFunction is called', () => {
-		const result = sortOrders(fakeOrders, sortFunctionMock);
-		expect(sortFunctionMock).toBeCalled();
 	});
 });
