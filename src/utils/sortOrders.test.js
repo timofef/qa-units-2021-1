@@ -1,7 +1,6 @@
 import React from 'react';
 import {sortByItemCount, sortByDate, getSortFunction, sortOrders, sortTypes} from './sortOrders';
 import {fakeOrders} from "../data/fakeOrders";
-import {sortFunctionMock} from "./__mocks__/sortFunction";
 
 describe('sortByItemCount function', () => {
 	it('same items count', () => {
@@ -137,33 +136,38 @@ describe('getSortFunction function', () => {
 });
 
 describe('sortOrders function', () => {
-	afterEach(() => {
-		jest.resetAllMocks();
-	});
-
 	it('sortFunction is called', () => {
+		const sortFunctionMock = jest.fn();
 		const result = sortOrders(fakeOrders, sortFunctionMock);
+
 		expect(sortFunctionMock).toBeCalled();
 	});
 
 	it('null arguments', () => {
+		const sortFunctionMock = jest.fn();
 		const result = sortOrders(null, null);
+
 		expect(result).toBeUndefined();
 	});
 
 	it('sortFunction is null', () => {
 		const result = sortOrders(fakeOrders, null);
+
 		expect(result).toBeUndefined();
 	});
 
 	it('orders are null', () => {
+		const sortFunctionMock = jest.fn();
 		const result = sortOrders(null, sortFunctionMock);
+
 		expect(result).toBeUndefined();
 	});
 
 	it('empty orders', () => {
+		const sortFunctionMock = jest.fn();
 		const orders = []
 		const result = sortOrders(orders, sortFunctionMock);
+
 		expect(result).toBeUndefined();
 	});
 

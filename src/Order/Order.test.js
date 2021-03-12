@@ -21,7 +21,7 @@ describe('Order.js', () => {
   it('render default', () => {
     const wrapper = shallow(<Order/>);
 
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.isEmptyRender()).toBeTruthy();
   });
 
   it('render with data', () => {
@@ -39,19 +39,19 @@ describe('Order.js', () => {
   it('render with no date', () => {
     const wrapper = shallow(<Order order={{shop: "some"}}/>);
 
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.isEmptyRender()).toBeTruthy();
   });
 
   it('render with no shop', () => {
     const wrapper = shallow(<Order order={{date: 1}}/>);
 
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.isEmptyRender()).toBeTruthy();
   });
 
   it('render without shop and date', () => {
     const wrapper = shallow(<Order order={{}}/>);
 
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.isEmptyRender()).toBeTruthy();
   });
 
   it('check if getDate is called', () => {
